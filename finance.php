@@ -11,6 +11,7 @@ $host="localhost";
     $tbl_phone="employee_phone_numbers";
     $con=mysql_connect("$host", "$username", "$password","$db_name")or die("cannot connect"); 
     mysql_select_db("$db_name")or die("cannot select DB");
+    
 
     $sql_check="(SELECT employee_id FROM hr WHERE employee_id='$eid')UNION(SELECT employee_id FROM manager WHERE employee_id='$eid')"
             . "UNION(SELECT employee_id FROM marketing_group WHERE employee_id='$eid')";

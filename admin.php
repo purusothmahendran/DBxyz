@@ -288,6 +288,15 @@
                                             
                                              else if(str=='marketing_group'){
                                                  document.getElementById("txtHint3").innerHTML="<div class='control-group'>"+  
+                                                                                                                                    "<label class='control-label' for='book'>Sales Volume: </label>"+  
+                                                                                                                                    "<div class='controls'>"+  
+                                                                                                                                        "<input type='text' id='svol'>" +
+                                                                                                                                    "</div> <br>"+ "<label class='control-label' for='book'>Team: </label>"+  
+                                                                                                                                    "<div class='controls'>"+  
+                                                                                                                                        "<label><input type='checkbox' id='chk1'>Advertiser</label>" +
+                                                                                                                                         "<label><input type='checkbox' id='chk2'>Sales</label>" +
+                                                                                                                                    "</div> <br>"+
+                                                                                                                                    
                                                                                                                                     "<label class='control-label' for='book'>Site ID: </label>"+  
                                                                                                                                     "<div class='controls'>"+  
                                                                                                                                         "<input type='text' id='site'>" +
@@ -369,6 +378,8 @@
         }
         
         else if(str=='marketing_group'){
+            var svol=document.getElementById('svol').value;
+            var flag;
             var site=document.getElementById('site').value;
             var sname=document.getElementById('sname').value;
             var size=document.getElementById('size').value;
@@ -377,8 +388,21 @@
             var price=document.getElementById('price').value;
             var name=document.getElementById('name').value;
             var desc=document.getElementById('desc').value;
-            var argstr1="?site="+site+"&&sname="+sname+"&&loc="+loc+"&&pid="+pid+"&&price="+price+"&&name="+name+"&&desc="+desc+"&&size="+size+"&&eid="+eid;
-            var file="market.php"+argstr1;
+            var chk1=document.getElementById('chk1');
+            var chk2=document.getElementById('chk2');
+            if(chk1.checked){
+                var flag=1;
+            }
+            else if(chk2.checked){
+                var flag=2;
+            }
+            else if((chk1.checked)&&(chk2.checked)){
+                var flag=3;
+                
+                
+            }
+            var argstr1="?site="+site+"&&sname="+sname+"&&loc="+loc+"&&pid="+pid+"&&price="+price+"&&name="+name+"&&desc="+desc+"&&size="+size+"&&svol="+svol+"&&eid="+eid+"&&flag="+flag;
+            var file="marketing.php"+argstr1;
         }
            
            //alert("values:"+cid+cname+start+end+stock+designation+projid+projname);
@@ -510,7 +534,15 @@
                         </script><?php
                     }
                 ?>
-
+<?php 
+if($_SESSION['activeUser']==0){
+    
+    echo "Please Log in";
+    
+} 
+else
+{
+?>
 		<div id="container">
 			<div id="content">
 				<div id="mainContent">
@@ -553,7 +585,7 @@
                             <div id="txtHint5" style="margin: 0 0 30px 30px;"></div>
 			</div>
 		</div>
-
+<?php } ?>
 		<div id="footer">Copyright © 2013 XYZinC</div>
 
 		<script src="./home/jquery-latest.js"></script>

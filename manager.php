@@ -23,6 +23,20 @@ $tbl_group="manager";
     $con=mysql_connect("$host", "$username", "$password","$db_name")or die("cannot connect"); 
     mysql_select_db("$db_name")or die("cannot select DB");
     
+    $sql_compche="SELECT * FROM computer_allocation WHERE employee_id='$empid'";
+    $ans=  mysql_query($sql_compche,$con);
+    $val=mysql_fetch_row($ans);
+    if($val){
+       echo "employee already has a computer and the computer id is  $val[0] \n";
+        
+    }
+    else{
+    $sql_compd="INSERT INTO computer_details VALUES('$cid','$cname')";
+    $result2=  mysql_query($sql_compd,$con);
+    $sql_compa="INSERT INTO computer_allocation VALUES('$cid','$empid','$start','$end')";
+    $result3=mysql_query($sql_compa,$con);
+    }
+    
     $sql_check="(SELECT employee_id FROM hr WHERE employee_id='$empid')UNION(SELECT employee_id FROM financier WHERE employee_id='$empid')"
             . "UNION(SELECT employee_id FROM marketing_group WHERE employee_id='$empid')";
      $result_check=  mysql_query($sql_check,$con);
@@ -48,19 +62,7 @@ $tbl_group="manager";
     $result = mysql_query($sql_insert,$con);
     }
     
-    $sql_compche="SELECT * FROM computer_allocation WHERE employee_id='$empid'";
-    $ans=  mysql_query($sql_compche,$con);
-    $val=mysql_fetch_row($ans);
-    if($val){
-       echo "employee already has a computer and the computer id is  $val[0] \n";
-        
-    }
-    else{
-    $sql_compd="INSERT INTO computer_details VALUES('$cid','$cname')";
-    $result2=  mysql_query($sql_compd,$con);
-    $sql_compa="INSERT INTO computer_allocation VALUES('$cid','$empid','$start','$end')";
-    $result3=mysql_query($sql_compa,$con);
-    }
+    
     
     $sql_proj="INSERT INTO project_details VALUES('$projid','$projname')";
     $res_proj=  mysql_query($sql_proj,$con);
